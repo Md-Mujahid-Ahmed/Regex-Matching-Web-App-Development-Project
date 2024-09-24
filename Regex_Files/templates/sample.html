@@ -1,0 +1,102 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex and Email Validator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #264653;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background-color: #2a9d8f;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #e9c46a;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+        .matches ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .matches li {
+            background-color: #c8b6ff;
+            color: white;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .email-validation {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Regex Matcher</h1>
+        <form action="/results" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="test_string" placeholder="Enter test string" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="regex" placeholder="Enter regex pattern" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Match</button>
+        </form>
+        {% if matches %}
+            <div class="result matches">
+                <h2>Matched Strings:</h2>
+                <ul>
+                {% for match in matches %}
+                    <li>{{ match }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <h1>Email Validator</h1>
+        <form action="/validate_email" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="email" placeholder="Enter email address" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Validate Email</button>
+        </form>
+        {% if email_valid is not none %}
+            <div class="result email-validation">
+                <h2>Email is {{ 'valid' if email_valid else 'invalid' }}</h2>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
